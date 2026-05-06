@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impressum — Friedrich Schäfer</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #090909;
+    --gold: oklch(72% 0.085 72);
+    --ivory: oklch(94% 0.018 80);
+    --ivory-dim: oklch(78% 0.018 80);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Outfit', Helvetica Neue, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--serif);
+    min-height: 100vh;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 60px;
+    background: rgba(9,9,9,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,110,0.12);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-back {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-back:hover { color: var(--gold); }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 160px 60px 120px;
+  }
+  .page-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-label::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 60px;
+    line-height: 1.1;
+  }
+  h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+  p {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ivory-dim);
+    margin-bottom: 12px;
+  }
+  a {
+    color: var(--ivory-dim);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+    transition: color 0.3s, border-color 0.3s;
+  }
+  a:hover { color: var(--gold); border-color: var(--gold); }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(200,169,110,0.2), transparent);
+    margin: 60px 0;
+  }
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 60px;
+    max-width: 100%;
+  }
+  .footer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-copy {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: rgba(244,240,232,0.2);
+    letter-spacing: 0.05em;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-links a {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,232,0.3);
+    text-decoration: none;
+    border: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  @media (max-width: 700px) {
+    nav { padding: 18px 24px; }
+    main { padding: 120px 24px 80px; }
+    footer { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Friedrich Schäfer</a>
+  <a href="index.html" class="nav-back">← Zurück</a>
+</nav>
+
+<main>
+  <div class="page-label">Rechtliches</div>
+  <h1>Impressum</h1>
+
+  <h2>Angaben gemäß § 5 TMG</h2>
+  <p>
+    Friedrich Schäfer<br>
+    [Straße und Hausnummer]<br>
+    [PLZ] [Ort]<br>
+    Deutschland
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>
+    E-Mail: <a href="mailto:kontakt@friedrichschaefer.de">kontakt@friedrichschaefer.de</a><br>
+    Telefon: [Telefonnummer eintragen]
+  </p>
+
+  <div class="divider"></div>
+
+  <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+  <p>
+    Friedrich Schäfer<br>
+    [Adresse wie oben]
+  </p>
+
+  <div class="divider"></div>
+
+  <h2>Haftung für Inhalte</h2>
+  <p>
+    Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.
+  </p>
+  <p>
+    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p>
+    Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+  </p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.
+  </p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Friedrich Schäfer</div>
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

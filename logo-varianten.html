@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friedrich Schäfer — Logo Varianten</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111;
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    color: #f4f0e8;
+  }
+
+  header {
+    padding: 40px 60px 20px;
+    border-bottom: 1px solid rgba(200,169,110,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: oklch(72% 0.085 72);
+    letter-spacing: 0.06em;
+  }
+
+  .header-sub {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(244,240,232,0.3);
+  }
+
+  .canvas {
+    display: flex;
+    gap: 2px;
+    padding: 60px;
+    overflow-x: auto;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .logo-card {
+    background: #0d0d0d;
+    border: 1px solid rgba(200,169,110,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 40px 36px;
+    gap: 32px;
+    width: 340px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+
+  .logo-card:hover { border-color: rgba(200,169,110,0.35); }
+
+  .logo-card-label {
+    position: absolute;
+    top: 14px;
+    left: 20px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.35);
+  }
+
+  .logo-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-previews {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .preview-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preview-item span {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.35);
+  }
+
+  .preview-dark {
+    background: #090909;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.15);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .preview-light {
+    background: #f4f0e8;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .preview-checker {
+    border-radius: 50%;
+    background-image: linear-gradient(45deg, #2a2a2a 25%, transparent 25%),
+                      linear-gradient(-45deg, #2a2a2a 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #2a2a2a 75%),
+                      linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244,240,232,0.5);
+    text-align: center;
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+  }
+
+  .section-title {
+    padding: 0 60px;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: oklch(72% 0.085 72);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    height: 1px;
+    flex: 1;
+    background: rgba(200,169,110,0.15);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">Friedrich Schäfer — Logo Varianten</div>
+  <div class="header-sub">5 Varianten · Klicken zum Herunterladen als SVG</div>
+</header>
+
+<div style="padding: 48px 60px 12px;">
+  <div class="section-title">Varianten</div>
+</div>
+
+<div class="canvas" id="canvas">
+
+  <!-- A: Großes F + gestapelter Name -->
+  <div class="logo-card" onclick="downloadSVG('logo-a')">
+    <div class="logo-card-label">A</div>
+    <div class="logo-main">
+      <svg id="logo-a" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="99" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="1"/>
+        <text x="18" y="158" font-family="Cormorant Garamond, Georgia, serif" font-size="160" font-weight="300" fill="rgba(200,169,110,0.07)" letter-spacing="-4">F</text>
+        <text x="100" y="85" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="4">FRIEDRICH</text>
+        <line x1="42" y1="97" x2="158" y2="97" stroke="rgba(200,169,110,0.45)" stroke-width="0.6"/>
+        <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" font-weight="300" fill="oklch(72% 0.085 72)" letter-spacing="6">SCHÄFER</text>
+        <text x="100" y="140" text-anchor="middle" font-family="Outfit, sans-serif" font-size="8" font-weight="300" fill="rgba(200,169,110,0.45)" letter-spacing="6">PIANIST</text>
+      </svg>
+    </div>
+    <div class="logo-previews">
+      <div class="preview-item">
+        <div class="preview-checker" style="width:64px;height:64px;">
+          <svg width="64" height="64" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="99" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="1"/>
+            <text x="18" y="158" font-family="Cormorant Garamond, Georgia, serif" font-size="160" font-weight="300" fill="rgba(200,169,110,0.07)" letter-spacing="-4">F</text>
+            <text x="100" y="85" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="4">FRIEDRICH</text>
+            <line x1="42" y1="97" x2="158" y2="97" stroke="rgba(200,169,110,0.45)" stroke-width="0.6"/>
+            <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" font-weight="300" fill="oklch(72% 0.085 72)" letter-spacing="6">SCHÄFER</text>
+            <text x="100" y="140" text-anchor="middle" font-family="Outfit, sans-serif" font-size="8" font-weight="300" fill="rgba(200,169,110,0.45)" letter-spacing="6">PIANIST</text>
+          </svg>
+        </div>
+        <span>transparent</span>
+      </div>
+      <div class="preview-item">
+        <div class="preview-dark" style="width:48px;height:48px;">
+          <svg width="48" height="48" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="99" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="1"/>
+            <text x="18" y="158" font-family="Cormorant Garamond, Georgia, serif" font-size="160" font-weight="300" fill="rgba(200,169,110,0.07)" letter-spacing="-4">F</text>
+            <text x="100" y="85" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="4">FRIEDRICH</text>
+            <line x1="42" y1="97" x2="158" y2="97" stroke="rgba(200,169,110,0.45)" stroke-width="0.6"/>
+            <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="20" font-weight="300" fill="oklch(72% 0.085 72)" letter-spacing="6">SCHÄFER</text>
+            <text x="100" y="140" text-anchor="middle" font-family="Outfit, sans-serif" font-size="8" font-weight="300" fill="rgba(200,169,110,0.45)" letter-spacing="6">PIANIST</text>
+          </svg>
+        </div>
+        <span>favicon</span>
+      </div>
+    </div>
+    <div class="logo-name">Großes F — Name gestapelt<br><span style="font-size:11px;color:rgba(200,169,110,0.4)">Klick → SVG Download</span></div>
+  </div>
+
+  <!-- B: Kursive Initialen FS -->
+  <div class="logo-card" onclick="downloadSVG('logo-b')">
+    <div class="logo-card-label">B</div>
+    <div class="logo-main">
+      <svg id="logo-b" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="92" fill="none" stroke="rgba(200,169,110,0.25)" stroke-width="0.8"/>
+        <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(200,169,110,0.1)" stroke-width="0.4"/>
+        <text x="28" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(72% 0.085 72)" opacity="0.95">F</text>
+        <text x="88" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" opacity="0.7">S</text>
+        <text x="100" y="158" text-anchor="middle" font-family="Outfit, sans-serif" font-size="7.5" font-weight="300" fill="rgba(200,169,110,0.5)" letter-spacing="6">PIANIST</text>
+      </svg>
+    </div>
+    <div class="logo-previews">
+      <div class="preview-item">
+        <div class="preview-checker" style="width:64px;height:64px;">
+          <svg width="64" height="64" viewBox="0 0 200 200" fill="none">
+            <text x="28" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(72% 0.085 72)" opacity="0.95">F</text>
+            <text x="88" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" opacity="0.7">S</text>
+          </svg>
+        </div>
+        <span>transparent</span>
+      </div>
+      <div class="preview-item">
+        <div class="preview-dark" style="width:48px;height:48px;">
+          <svg width="48" height="48" viewBox="0 0 200 200" fill="none">
+            <text x="28" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(72% 0.085 72)" opacity="0.95">F</text>
+            <text x="88" y="132" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" opacity="0.7">S</text>
+          </svg>
+        </div>
+        <span>favicon</span>
+      </div>
+    </div>
+    <div class="logo-name">Kursive Initialen FS<br><span style="font-size:11px;color:rgba(200,169,110,0.4)">Klick → SVG Download</span></div>
+  </div>
+
+  <!-- C: Geometrisch FS im Kreis -->
+  <div class="logo-card" onclick="downloadSVG('logo-c')">
+    <div class="logo-card-label">C</div>
+    <div class="logo-main">
+      <svg id="logo-c" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="94" fill="none" stroke="oklch(72% 0.085 72)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="0.4"/>
+        <text x="100" y="116" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="72" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="-2">FS</text>
+        <text x="100" y="148" text-anchor="middle" font-family="Outfit, sans-serif" font-size="7" font-weight="400" fill="oklch(72% 0.085 72)" letter-spacing="7">PIANIST</text>
+        <line x1="34" y1="144" x2="54" y2="144" stroke="rgba(200,169,110,0.4)" stroke-width="0.6"/>
+        <line x1="146" y1="144" x2="166" y2="144" stroke="rgba(200,169,110,0.4)" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="logo-previews">
+      <div class="preview-item">
+        <div class="preview-checker" style="width:64px;height:64px;">
+          <svg width="64" height="64" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="94" fill="none" stroke="oklch(72% 0.085 72)" stroke-width="1"/>
+            <text x="100" y="116" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="72" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="-2">FS</text>
+          </svg>
+        </div>
+        <span>transparent</span>
+      </div>
+      <div class="preview-item">
+        <div class="preview-dark" style="width:48px;height:48px;">
+          <svg width="48" height="48" viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="94" fill="none" stroke="oklch(72% 0.085 72)" stroke-width="1"/>
+            <text x="100" y="116" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="72" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="-2">FS</text>
+          </svg>
+        </div>
+        <span>favicon</span>
+      </div>
+    </div>
+    <div class="logo-name">Geometrisch — FS im Kreis<br><span style="font-size:11px;color:rgba(200,169,110,0.4)">Klick → SVG Download</span></div>
+  </div>
+
+  <!-- D: Voller Name elegant -->
+  <div class="logo-card" onclick="downloadSVG('logo-d')">
+    <div class="logo-card-label">D</div>
+    <div class="logo-main">
+      <svg id="logo-d" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="94" fill="none" stroke="rgba(200,169,110,0.15)" stroke-width="0.6"/>
+        <line x1="70" y1="52" x2="130" y2="52" stroke="oklch(72% 0.085 72)" stroke-width="0.8"/>
+        <text x="100" y="90" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="34" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" letter-spacing="1">Friedrich</text>
+        <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="21" font-weight="500" fill="oklch(72% 0.085 72)" letter-spacing="7">SCHÄFER</text>
+        <line x1="70" y1="128" x2="130" y2="128" stroke="rgba(200,169,110,0.3)" stroke-width="0.6"/>
+        <text x="100" y="148" text-anchor="middle" font-family="Outfit, sans-serif" font-size="7" font-weight="300" fill="rgba(200,169,110,0.5)" letter-spacing="6">PIANIST</text>
+        <line x1="82" y1="158" x2="118" y2="158" stroke="oklch(72% 0.085 72)" stroke-width="0.6"/>
+      </svg>
+    </div>
+    <div class="logo-previews">
+      <div class="preview-item">
+        <div class="preview-checker" style="width:64px;height:64px;">
+          <svg width="64" height="64" viewBox="0 0 200 200" fill="none">
+            <line x1="70" y1="52" x2="130" y2="52" stroke="oklch(72% 0.085 72)" stroke-width="0.8"/>
+            <text x="100" y="90" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="34" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" letter-spacing="1">Friedrich</text>
+            <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="21" font-weight="500" fill="oklch(72% 0.085 72)" letter-spacing="7">SCHÄFER</text>
+          </svg>
+        </div>
+        <span>transparent</span>
+      </div>
+      <div class="preview-item">
+        <div class="preview-dark" style="width:48px;height:48px;">
+          <svg width="48" height="48" viewBox="0 0 200 200" fill="none">
+            <text x="100" y="90" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="34" font-weight="300" font-style="italic" fill="oklch(94% 0.018 80)" letter-spacing="1">Friedrich</text>
+            <text x="100" y="118" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="21" font-weight="500" fill="oklch(72% 0.085 72)" letter-spacing="7">SCHÄFER</text>
+          </svg>
+        </div>
+        <span>favicon</span>
+      </div>
+    </div>
+    <div class="logo-name">Voller Name — elegant<br><span style="font-size:11px;color:rgba(200,169,110,0.4)">Klick → SVG Download</span></div>
+  </div>
+
+  <!-- E: Klaviertasten + Name -->
+  <div class="logo-card" onclick="downloadSVG('logo-e')">
+    <div class="logo-card-label">E</div>
+    <div class="logo-main">
+      <svg id="logo-e" width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="94" fill="none" stroke="rgba(200,169,110,0.2)" stroke-width="0.7"/>
+        <text x="10" y="162" font-family="Cormorant Garamond, Georgia, serif" font-size="170" font-weight="300" fill="rgba(200,169,110,0.05)" letter-spacing="-5">F</text>
+        <!-- Klaviertasten -->
+        <rect x="62" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="74" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="86" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="98" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="110" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="122" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <rect x="134" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+        <!-- Schwarze Tasten -->
+        <rect x="70" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+        <rect x="82" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+        <rect x="106" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+        <rect x="118" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+        <rect x="130" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+        <text x="100" y="106" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="4">FRIEDRICH</text>
+        <text x="100" y="130" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="18" font-weight="400" fill="oklch(72% 0.085 72)" letter-spacing="8">SCHÄFER</text>
+        <text x="100" y="152" text-anchor="middle" font-family="Outfit, sans-serif" font-size="7" font-weight="300" fill="rgba(200,169,110,0.4)" letter-spacing="6">PIANIST</text>
+      </svg>
+    </div>
+    <div class="logo-previews">
+      <div class="preview-item">
+        <div class="preview-checker" style="width:64px;height:64px;">
+          <svg width="64" height="64" viewBox="0 0 200 200" fill="none">
+            <rect x="62" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="74" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="86" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="98" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="110" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="122" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <rect x="134" y="44" width="10" height="24" rx="1" fill="rgba(200,169,110,0.15)"/>
+            <text x="100" y="110" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="26" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="4">FS</text>
+          </svg>
+        </div>
+        <span>transparent</span>
+      </div>
+      <div class="preview-item">
+        <div class="preview-dark" style="width:48px;height:48px;">
+          <svg width="48" height="48" viewBox="0 0 200 200" fill="none">
+            <rect x="70" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+            <rect x="82" y="44" width="7" height="15" rx="0.5" fill="rgba(200,169,110,0.3)"/>
+            <text x="100" y="130" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="48" font-weight="300" fill="oklch(94% 0.018 80)" letter-spacing="-2">FS</text>
+          </svg>
+        </div>
+        <span>favicon</span>
+      </div>
+    </div>
+    <div class="logo-name">Klaviertasten + Name<br><span style="font-size:11px;color:rgba(200,169,110,0.4)">Klick → SVG Download</span></div>
+  </div>
+
+</div>
+
+<script>
+function downloadSVG(id) {
+  const svg = document.getElementById(id);
+  if (!svg) return;
+  const serializer = new XMLSerializer();
+  let source = serializer.serializeToString(svg);
+  // Add XML declaration and namespace
+  if (!source.includes('xmlns="http://www.w3.org/2000/svg"')) {
+    source = source.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'friedrich-schaefer-logo-' + id.replace('logo-', '') + '.svg';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+</script>
+
+</body>
+</html>

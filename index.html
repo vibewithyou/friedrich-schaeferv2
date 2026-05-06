@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Friedrich Schäfer — Pianist</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --black: #090909;
+    --off-black: #111111;
+    --dark: #181818;
+    --mid: #2a2a2a;
+    --gold: oklch(72% 0.085 72);
+    --gold-dim: oklch(62% 0.065 72);
+    --ivory: oklch(94% 0.018 80);
+    --ivory-dim: oklch(78% 0.018 80);
+    --white: #f4f0e8;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Outfit', Helvetica Neue, Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--serif);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVIGATION ─────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 60px;
+    transition: background 0.5s, padding 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(9,9,9,0.95);
+    backdrop-filter: blur(12px);
+    padding: 18px 60px;
+    border-bottom: 1px solid rgba(200,169,110,0.12);
+  }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-links a {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .lang-toggle {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px;
+    padding: 4px 6px;
+    cursor: pointer;
+  }
+
+  .lang-toggle button {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    background: none;
+    border: none;
+    color: var(--ivory-dim);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: 1px;
+    transition: all 0.2s;
+  }
+
+  .lang-toggle button.active {
+    background: var(--gold);
+    color: var(--black);
+    font-weight: 500;
+  }
+
+  /* ─── HERO ───────────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    padding-bottom: 80px;
+  }
+
+  .hero-slides {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-slide.active { opacity: 1; }
+
+  /* Placeholder slides with atmospheric gradients */
+  .hero-slide:nth-child(1) {
+    background: linear-gradient(160deg, #0a0806 0%, #1a1208 40%, #0d0d0d 100%);
+  }
+  .hero-slide:nth-child(2) {
+    background: linear-gradient(200deg, #050510 0%, #0f0d1a 40%, #080808 100%);
+  }
+  .hero-slide:nth-child(3) {
+    background: linear-gradient(140deg, #08060a 0%, #150d10 50%, #0a0a0a 100%);
+  }
+
+  .hero-slide-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .slide-ph-box {
+    width: 320px;
+    height: 460px;
+    border: 1px dashed rgba(200,169,110,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    opacity: 0.35;
+  }
+
+  .slide-ph-box span {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .slide-ph-box small {
+    font-family: var(--sans);
+    font-size: 9px;
+    color: var(--ivory-dim);
+    opacity: 0.6;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(9,9,9,0.2) 0%,
+      rgba(9,9,9,0.1) 40%,
+      rgba(9,9,9,0.75) 100%
+    );
+    z-index: 1;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .hero-title-wrapper {
+    overflow: hidden;
+  }
+
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(60px, 10vw, 130px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    line-height: 0.92;
+    color: var(--ivory);
+    display: block;
+    transform: translateY(100%);
+    animation: slideUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 0px;
+    background: var(--gold);
+    margin: 0 auto;
+    animation: lineGrow 1s ease 1s forwards;
+  }
+
+  .hero-quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ivory-dim);
+    letter-spacing: 0.03em;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.6s forwards;
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  /* Floating elements */
+  .hero-floating {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-float-1 {
+    top: 22%;
+    left: 8%;
+    font-family: var(--serif);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    writing-mode: vertical-rl;
+    animation: fadeIn 1.5s ease 2s forwards;
+  }
+
+  .hero-float-2 {
+    top: 30%;
+    right: 8%;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(244,240,232,0.35);
+    opacity: 0;
+    animation: fadeIn 1.5s ease 2.4s forwards;
+    text-align: right;
+    line-height: 2;
+  }
+
+  .hero-float-3 {
+    bottom: 22%;
+    left: 6%;
+    font-family: var(--serif);
+    font-size: 42px;
+    font-weight: 300;
+    color: rgba(200,169,110,0.06);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeIn 2s ease 1.8s forwards;
+  }
+
+  .hero-dots {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 8px;
+  }
+
+  .hero-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(200,169,110,0.3);
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+    border: none;
+  }
+
+  .hero-dot.active {
+    background: var(--gold);
+    transform: scale(1.4);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    right: 60px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 3s forwards;
+  }
+
+  .scroll-hint span {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(244,240,232,0.4);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(200,169,110,0.4), transparent);
+    animation: scrollPulse 2s ease-in-out 3s infinite;
+  }
+
+  @keyframes slideUp {
+    to { transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  @keyframes lineGrow {
+    to { height: 50px; }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.1); }
+  }
+
+  /* ─── SECTION BASE ───────────────────────────────────────── */
+  section {
+    padding: 120px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,169,110,0.2), transparent);
+    margin: 0;
+  }
+
+  .section-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .section-label::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--gold-dim);
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 72px);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ivory);
+    margin-bottom: 24px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ─── BIOGRAPHY ──────────────────────────────────────────── */
+  #biography {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+    padding: 140px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .bio-image-col {
+    position: sticky;
+    top: 100px;
+  }
+
+  .bio-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border: 1px dashed rgba(200,169,110,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    background: linear-gradient(160deg, #111 0%, #0d0d0d 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bio-photo-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(200,169,110,0.04) 0%, transparent 70%);
+  }
+
+  .ph-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.4);
+  }
+
+  .ph-desc {
+    font-family: var(--sans);
+    font-size: 9px;
+    color: rgba(244,240,232,0.25);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .bio-text-col {}
+
+  .bio-text p {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ivory-dim);
+    margin-bottom: 24px;
+  }
+
+  .bio-text p:first-child {
+    font-size: 22px;
+    color: var(--ivory);
+    line-height: 1.7;
+  }
+
+  .bio-awards {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .award-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .award-year {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    min-width: 44px;
+    margin-top: 3px;
+  }
+
+  .award-text {
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--ivory-dim);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+  }
+
+  /* ─── CONCERTS ───────────────────────────────────────────── */
+  #concerts {
+    background: var(--off-black);
+    max-width: 100%;
+    padding: 120px 0;
+  }
+
+  .concerts-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .concert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 60px;
+  }
+
+  .concert-item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 40px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .concert-item::before {
+    content: '';
+    position: absolute;
+    left: -60px;
+    right: -60px;
+    top: 0;
+    bottom: 0;
+    background: rgba(200,169,110,0.03);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .concert-item:hover::before { opacity: 1; }
+
+  .concert-date-block {
+    text-align: right;
+  }
+
+  .concert-day {
+    font-family: var(--serif);
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .concert-month {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+    margin-top: 4px;
+  }
+
+  .concert-info h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 4px;
+  }
+
+  .concert-info p {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ivory-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .concert-location {
+    text-align: right;
+  }
+
+  .concert-city {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--ivory-dim);
+    display: block;
+  }
+
+  .concert-venue {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: rgba(244,240,232,0.35);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  .concerts-all-link {
+    margin-top: 52px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    transition: gap 0.3s;
+  }
+
+  .concerts-all-link:hover { gap: 20px; }
+
+  .concerts-all-link::after {
+    content: '→';
+    font-size: 14px;
+  }
+
+  /* ─── VIDEOS ─────────────────────────────────────────────── */
+  #videos {
+    padding: 120px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .video-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--dark);
+  }
+
+  .video-item:first-child {
+    grid-column: span 2;
+  }
+
+  .video-thumb {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+    transition: transform 0.5s ease;
+  }
+
+  .video-item:hover .video-thumb { transform: scale(1.02); }
+
+  .video-ph-stripes {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 18px,
+      rgba(200,169,110,0.025) 18px,
+      rgba(200,169,110,0.025) 19px
+    );
+  }
+
+  .video-play-btn {
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .video-item:hover .video-play-btn {
+    background: rgba(200,169,110,0.15);
+    border-color: var(--gold);
+  }
+
+  .video-play-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--gold);
+    margin-left: 4px;
+  }
+
+  .video-ph-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.35);
+    position: relative;
+    z-index: 1;
+  }
+
+  .video-caption {
+    padding: 16px 20px;
+    background: rgba(15,15,15,0.95);
+  }
+
+  .video-caption h3 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 4px;
+  }
+
+  .video-caption p {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ivory-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* YouTube embed placeholder */
+  .youtube-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #0d0d0d;
+    border: 1px dashed rgba(200,169,110,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .youtube-placeholder .yt-icon {
+    width: 52px;
+    height: 36px;
+    background: rgba(200,169,110,0.12);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .youtube-placeholder .yt-ph-text {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(200,169,110,0.4);
+    text-transform: uppercase;
+  }
+
+  /* ─── AUDIO ──────────────────────────────────────────────── */
+  #audio {
+    background: var(--off-black);
+    max-width: 100%;
+    padding: 120px 0;
+  }
+
+  .audio-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .audio-tracks {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-top: 60px;
+  }
+
+  .audio-track {
+    display: grid;
+    grid-template-columns: 48px 1fr 120px 48px;
+    gap: 24px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .audio-track::before {
+    content: '';
+    position: absolute;
+    left: -60px;
+    right: -60px;
+    top: 0;
+    bottom: 0;
+    background: rgba(200,169,110,0.03);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .audio-track:hover::before { opacity: 1; }
+
+  .track-num {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: rgba(244,240,232,0.2);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  .track-info h4 {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 2px;
+  }
+
+  .track-info span {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ivory-dim);
+    letter-spacing: 0.05em;
+  }
+
+  .track-waveform {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 24px;
+    opacity: 0.3;
+  }
+
+  .track-waveform span {
+    display: block;
+    width: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+  }
+
+  .track-duration {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: rgba(244,240,232,0.3);
+    text-align: right;
+    letter-spacing: 0.08em;
+  }
+
+  .track-play {
+    width: 32px;
+    height: 32px;
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 50%;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .track-play:hover {
+    background: rgba(200,169,110,0.1);
+    border-color: var(--gold);
+  }
+
+  .track-play svg {
+    width: 10px;
+    height: 10px;
+    fill: var(--gold);
+    margin-left: 2px;
+  }
+
+  .audio-ph-note {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.3);
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .audio-ph-note::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: rgba(200,169,110,0.3);
+  }
+
+  /* ─── PRESS ──────────────────────────────────────────────── */
+  #press {
+    padding: 120px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .press-quotes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .press-quote {
+    padding: 40px 36px;
+    border-top: 1px solid rgba(200,169,110,0.25);
+    background: linear-gradient(to bottom, rgba(200,169,110,0.025) 0%, transparent 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .press-quote blockquote {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ivory);
+    flex: 1;
+  }
+
+  .press-source {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .press-logos {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    margin-top: 80px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    flex-wrap: wrap;
+  }
+
+  .press-logo-ph {
+    height: 24px;
+    min-width: 80px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .press-logo-ph span {
+    font-family: var(--sans);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    color: rgba(244,240,232,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ─── GALLERY ────────────────────────────────────────────── */
+  #gallery {
+    background: var(--off-black);
+    max-width: 100%;
+    padding: 120px 0;
+  }
+
+  .gallery-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, 280px);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .gallery-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+  .gallery-item:nth-child(2) { grid-column: span 4; }
+  .gallery-item:nth-child(3) { grid-column: span 3; }
+  .gallery-item:nth-child(4) { grid-column: span 3; }
+  .gallery-item:nth-child(5) { grid-column: span 4; }
+
+  .gallery-ph {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-item:hover .gallery-ph { transform: scale(1.04); }
+
+  .gallery-ph-stripes {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0px,
+      transparent 22px,
+      rgba(200,169,110,0.02) 22px,
+      rgba(200,169,110,0.02) 23px
+    );
+  }
+
+  .gallery-ph:nth-child(odd) { background: #0e0e0e; }
+  .gallery-ph:nth-child(even) { background: #131313; }
+
+  .gallery-ph-text {
+    position: relative;
+    z-index: 1;
+    font-family: var(--sans);
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.25);
+    text-align: center;
+  }
+
+  .gallery-ph-icon {
+    position: relative;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    opacity: 0.2;
+  }
+
+  .gallery-item:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(200,169,110,0.06);
+    pointer-events: none;
+  }
+
+  /* ─── CONTACT ────────────────────────────────────────────── */
+  #contact {
+    padding: 140px 60px;
+    max-width: 1300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .contact-left h2 {
+    font-family: var(--serif);
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ivory);
+    margin-bottom: 32px;
+  }
+
+  .contact-left h2 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .contact-left p {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--ivory-dim);
+    margin-bottom: 20px;
+  }
+
+  .contact-blocks {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 52px;
+  }
+
+  .contact-block-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .contact-block-text {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1.7;
+  }
+
+  .contact-block-text a {
+    color: var(--ivory);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .contact-block-text a:hover {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .contact-right {}
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-field label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+  }
+
+  .form-field input,
+  .form-field textarea,
+  .form-field select {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    color: var(--ivory);
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: 300;
+    padding: 14px 18px;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: rgba(200,169,110,0.5);
+    background: rgba(200,169,110,0.02);
+  }
+
+  .form-field textarea {
+    height: 140px;
+    resize: vertical;
+    line-height: 1.6;
+  }
+
+  .form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: none;
+    border: 1px solid rgba(200,169,110,0.5);
+    color: var(--gold);
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover {
+    background: rgba(200,169,110,0.08);
+    border-color: var(--gold);
+    gap: 20px;
+  }
+
+  /* ─── FOOTER ─────────────────────────────────────────────── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 60px;
+    max-width: 100%;
+  }
+
+  .footer-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-social a {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-social a:hover { color: var(--gold); }
+
+  .footer-copy {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: rgba(244,240,232,0.2);
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─────────────────────────────────── */
+
+  /* Base reveal state */
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Slide from left */
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Slide from right */
+  .reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Scale reveal */
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.96);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Stagger delays */
+  .stagger-1 { transition-delay: 0.05s; }
+  .stagger-2 { transition-delay: 0.12s; }
+  .stagger-3 { transition-delay: 0.19s; }
+  .stagger-4 { transition-delay: 0.26s; }
+  .stagger-5 { transition-delay: 0.33s; }
+
+  /* Section title word-by-word reveal */
+  .title-word {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+  }
+  .title-word-inner {
+    display: inline-block;
+    transform: translateY(110%);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .title-reveal-visible .title-word-inner {
+    transform: translateY(0);
+  }
+
+  /* Cursor glow */
+  #cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+    opacity: 0;
+  }
+
+  /* Section divider animated */
+  .section-divider {
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .section-divider.visible {
+    transform: scaleX(1);
+  }
+
+  /* Concert item hover */
+  .concert-item {
+    transition: padding-left 0.3s ease;
+  }
+  .concert-item:hover {
+    padding-left: 8px;
+  }
+
+  /* Press quote hover lift */
+  .press-quote {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s ease;
+  }
+  .press-quote:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  /* Gallery item overlay reveal */
+  .gallery-item::after {
+    transition: opacity 0.4s ease !important;
+  }
+
+  /* Audio track hover */
+  .audio-track .track-waveform {
+    transition: opacity 0.3s;
+  }
+  .audio-track:hover .track-waveform {
+    opacity: 1 !important;
+  }
+
+  /* Video item transition */
+  .video-thumb {
+    overflow: hidden;
+  }
+
+  /* Hero parallax layer */
+  .hero-parallax {
+    will-change: transform;
+  }
+
+  /* Line draw on section labels */
+  .section-label::after {
+    width: 0 !important;
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+  }
+  .section-label.line-visible::after {
+    width: 48px !important;
+  }
+
+  /* Gold line under bio */
+  .bio-awards .award-item {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .bio-awards.visible .award-item:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
+  .bio-awards.visible .award-item:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.22s; }
+
+  /* ─── MOBILE ─────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    nav.scrolled { padding: 14px 24px; }
+    .nav-links { display: none; }
+
+    section { padding: 80px 24px; }
+
+    #biography {
+      grid-template-columns: 1fr;
+      gap: 48px;
+      padding: 80px 24px;
+    }
+    .bio-image-col { position: static; }
+
+    .press-quotes { grid-template-columns: 1fr; }
+
+    #contact {
+      grid-template-columns: 1fr;
+      gap: 60px;
+      padding: 80px 24px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+
+    .gallery-item { grid-column: span 1 !important; grid-row: span 1 !important; }
+    .gallery-item .gallery-ph { aspect-ratio: 4/3; height: auto; }
+
+    #concerts, #audio, #gallery {
+      padding: 80px 0;
+    }
+
+    .concerts-inner, .audio-inner, .gallery-inner {
+      padding: 0 24px;
+    }
+
+    .concert-item {
+      grid-template-columns: 60px 1fr;
+    }
+
+    .concert-location { display: none; }
+
+    .footer-inner { flex-direction: column; text-align: center; }
+
+    .video-grid { grid-template-columns: 1fr; }
+    .video-item:first-child { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- ──────────── NAVIGATION ──────────── -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Friedrich Schäfer</a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#biography" data-de="Biografie" data-en="Biography">Biografie</a></li>
+    <li><a href="#concerts" data-de="Konzerte" data-en="Concerts">Konzerte</a></li>
+    <li><a href="#videos" data-de="Videos" data-en="Videos">Videos</a></li>
+    <li><a href="#audio" data-de="Hörproben" data-en="Audio">Hörproben</a></li>
+    <li><a href="#press" data-de="Presse" data-en="Press">Presse</a></li>
+    <li><a href="#gallery" data-de="Galerie" data-en="Gallery">Galerie</a></li>
+    <li><a href="#contact" data-de="Kontakt" data-en="Contact">Kontakt</a></li>
+  </ul>
+  <div class="lang-toggle">
+    <button class="active" id="btn-de">DE</button>
+    <button id="btn-en">EN</button>
+  </div>
+</nav>
+
+<!-- ──────────── HERO ──────────── -->
+<section id="hero">
+  <div class="hero-slides" id="hero-slides">
+    <!-- Slide 1 -->
+    <div class="hero-slide active">
+      <div class="hero-slide-placeholder">
+        <div class="slide-ph-box">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="0.5" y="0.5" width="39" height="39" stroke="rgba(200,169,110,0.4)" stroke-dasharray="4 4"/>
+            <circle cx="20" cy="16" r="6" stroke="rgba(200,169,110,0.4)" fill="none"/>
+            <path d="M8 34 Q20 26 32 34" stroke="rgba(200,169,110,0.4)" fill="none"/>
+          </svg>
+          <span>Portrait Foto</span>
+          <small>Hochformat · Bühnenbeleuchtung</small>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="hero-slide-placeholder">
+        <div class="slide-ph-box">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="2" y="14" width="36" height="20" rx="1" stroke="rgba(200,169,110,0.4)" fill="none"/>
+            <rect x="8" y="8" width="5" height="10" rx="1" fill="rgba(200,169,110,0.2)"/>
+            <rect x="16" y="8" width="5" height="10" rx="1" fill="rgba(200,169,110,0.2)"/>
+            <rect x="24" y="8" width="5" height="10" rx="1" fill="rgba(200,169,110,0.2)"/>
+          </svg>
+          <span>Flügel Foto</span>
+          <small>Konzertflügel · Atmosphärisch</small>
+        </div>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="hero-slide">
+      <div class="hero-slide-placeholder">
+        <div class="slide-ph-box">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="1" y="1" width="38" height="38" rx="2" stroke="rgba(200,169,110,0.4)" fill="none"/>
+            <path d="M8 32 L8 20 L15 25 L22 15 L29 22 L36 32" stroke="rgba(200,169,110,0.4)" fill="none"/>
+          </svg>
+          <span>Konzert Foto</span>
+          <small>Live Auftritt · Konzertsaal</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-overlay"></div>
+
+  <!-- Floating decorative elements -->
+  <div class="hero-floating hero-float-1" id="hero-float-1">Pianist</div>
+  <div class="hero-floating hero-float-2" id="hero-float-2">
+    Carl Bechstein<br>Wettbewerb<br>2014 · 2017
+  </div>
+  <div class="hero-floating hero-float-3">FS</div>
+
+  <!-- Main name -->
+  <div class="hero-content" id="hero-content">
+    <div class="hero-title-wrapper">
+      <span class="hero-name" id="hero-name">Friedrich <em>Schäfer</em></span>
+    </div>
+    <div class="hero-line"></div>
+    <div class="hero-subtitle" data-de="Pianist" data-en="Pianist">Pianist</div>
+    <div class="hero-quote" id="hero-quote">
+      <span data-de="Musik, die erzählt — klar, lebendig, klassisch." data-en="Music that speaks — clear, vivid, classical.">Musik, die erzählt — klar, lebendig, klassisch.</span>
+    </div>
+  </div>
+
+  <!-- Slide dots -->
+  <div class="hero-dots" id="hero-dots"></div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <span data-de="Entdecken" data-en="Explore">Entdecken</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── BIOGRAPHY ──────────── -->
+<div id="biography">
+  <div class="bio-image-col reveal-left">
+    <div class="bio-photo-placeholder">
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="20" r="8" stroke="rgba(200,169,110,0.35)" fill="none" stroke-width="1.5"/>
+        <path d="M8 44 Q24 34 40 44" stroke="rgba(200,169,110,0.35)" fill="none" stroke-width="1.5"/>
+      </svg>
+      <div class="ph-label">Portrait</div>
+      <div class="ph-desc">Künstlerfoto<br>ca. 3:4 Format<br>Bühne / Studio</div>
+    </div>
+  </div>
+  <div class="bio-text-col">
+    <div class="section-label">
+      <span data-de="Biografie" data-en="Biography">Biografie</span>
+    </div>
+    <h2 class="section-title" data-de="Junger Konzert&shy;pianist aus <em>Mittelsachsen</em>" data-en="A young concert pianist from <em>Saxony</em>">
+      Junger Konzert&shy;pianist aus <em>Mittelsachsen</em>
+    </h2>
+    <div class="bio-text" id="bio-text">
+      <p data-de="Friedrich Schäfer ist ein klassischer Pianist aus Mittelsachsen mit einer außergewöhnlichen musikalischen Reife und einem breiten Repertoire, das von der Wiener Klassik bis zur romantischen Klavierliteratur reicht." data-en="Friedrich Schäfer is a classical pianist from central Saxony with exceptional musical maturity and a broad repertoire spanning from the Viennese classical era to romantic piano literature.">
+        Friedrich Schäfer ist ein klassischer Pianist aus Mittelsachsen mit einer außergewöhnlichen musikalischen Reife und einem breiten Repertoire, das von der Wiener Klassik bis zur romantischen Klavierliteratur reicht.
+      </p>
+      <p data-de="Sein Spiel verbindet pianistische Präzision mit lyrischer Tiefe und erzählerischer Energie — Qualitäten, die bereits in seiner frühen Wettbewerbsbiografie sichtbar werden. Beim renommierten Carl-Bechstein-Wettbewerb wurde er sowohl 2014 als auch 2017 ausgezeichnet." data-en="His playing combines pianistic precision with lyrical depth and narrative energy — qualities already visible in his early competition biography. He received prizes at the prestigious Carl Bechstein Competition in both 2014 and 2017.">
+        Sein Spiel verbindet pianistische Präzision mit lyrischer Tiefe und erzählerischer Energie — Qualitäten, die bereits in seiner frühen Wettbewerbsbiografie sichtbar werden. Beim renommierten Carl-Bechstein-Wettbewerb wurde er sowohl 2014 als auch 2017 ausgezeichnet.
+      </p>
+      <p data-de="Sein Repertoire umfasst charaktervolle Miniaturen ebenso wie große Konzertwerke. Komponisten wie Edvard Grieg, Carl Reinecke, Valery Gavrilin und Daniel Gottlob Türk prägen seinen musikalischen Weg — Musik mit Szene, Bewegung und atmosphärischem Klang." data-en="His repertoire encompasses expressive miniatures as well as major concert works. Composers such as Edvard Grieg, Carl Reinecke, Valery Gavrilin and Daniel Gottlob Türk shape his musical path — music with scene, movement and atmospheric sound.">
+        Sein Repertoire umfasst charaktervolle Miniaturen ebenso wie große Konzertwerke. Komponisten wie Edvard Grieg, Carl Reinecke, Valery Gavrilin und Daniel Gottlob Türk prägen seinen musikalischen Weg — Musik mit Szene, Bewegung und atmosphärischem Klang.
+      </p>
+    </div>
+    <div class="bio-awards">
+      <div class="award-item">
+        <div class="award-year">2017</div>
+        <div class="award-text" data-de="Bärenreiter-Preis, Carl-Bechstein-Klavierwettbewerb · Altersgruppe II" data-en="Bärenreiter Prize, Carl Bechstein Piano Competition · Age Group II">Bärenreiter-Preis, Carl-Bechstein-Klavierwettbewerb · Altersgruppe II</div>
+      </div>
+      <div class="award-item">
+        <div class="award-year">2014</div>
+        <div class="award-text" data-de="Bärenreiter-Preis, Carl-Bechstein-Klavierduowettbewerb · Altersgruppe I" data-en="Bärenreiter Prize, Carl Bechstein Piano Duo Competition · Age Group I">Bärenreiter-Preis, Carl-Bechstein-Klavierduowettbewerb · Altersgruppe I</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── CONCERTS ──────────── -->
+<div id="concerts">
+  <div class="concerts-inner">
+    <div class="section-label">
+      <span data-de="Konzerte" data-en="Concerts">Konzerte</span>
+    </div>
+    <h2 class="section-title" data-de="Kommende <em>Auftritte</em>" data-en="Upcoming <em>Performances</em>">Kommende <em>Auftritte</em></h2>
+
+    <div class="concert-list" id="concert-list">
+      <!-- Populated by JS -->
+    </div>
+
+    <a href="#" class="concerts-all-link">
+      <span data-de="Alle Konzerte" data-en="All Concerts">Alle Konzerte</span>
+    </a>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── VIDEOS ──────────── -->
+<section id="videos">
+  <div class="section-label">
+    <span data-de="Videos" data-en="Videos">Videos</span>
+  </div>
+  <h2 class="section-title" data-de="Film &amp; <em>Konzertmitschnitte</em>" data-en="Film &amp; <em>Concert Recordings</em>">Film &amp; <em>Konzertmitschnitte</em></h2>
+
+  <div class="video-grid">
+    <!-- Featured video (large) -->
+    <div class="video-item">
+      <div class="youtube-placeholder">
+        <div class="video-ph-stripes"></div>
+        <div class="yt-icon">
+          <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
+            <path d="M21.5 2.5C21.5 2.5 21.2 0.7 20.4 0C19.4 -0.1 11 -0.1 11 -0.1C11 -0.1 2.6 -0.1 1.6 0C0.9 0.7 0.5 2.5 0.5 2.5S0 4.6 0 6.7V8.7C0 10.8 0.5 12.9 0.5 12.9S0.9 14.7 1.6 15.4C2.6 15.5 11 15.5 11 15.5C11 15.5 19.4 15.5 20.4 15.4C21.2 14.7 21.5 12.9 21.5 12.9S22 10.8 22 8.7V6.7C22 4.6 21.5 2.5 21.5 2.5Z" fill="rgba(200,169,110,0.3)"/>
+            <path d="M8.8 11.1V4.4L14.5 7.8L8.8 11.1Z" fill="rgba(200,169,110,0.6)"/>
+          </svg>
+        </div>
+        <div class="yt-ph-text" data-de="YouTube-Video einbetten" data-en="Embed YouTube Video">YouTube-Video einbetten</div>
+        <div style="font-family:var(--sans); font-size:9px; color:rgba(244,240,232,0.2); letter-spacing:0.1em;">z.B. Grieg · Lyric Pieces op.54 Nr.3</div>
+      </div>
+      <div class="video-caption">
+        <h3 data-de="Edvard Grieg — Zug der Zwerge, op. 54 Nr. 3" data-en="Edvard Grieg — March of the Dwarfs, op. 54 No. 3">Edvard Grieg — Zug der Zwerge, op. 54 Nr. 3</h3>
+        <p data-de="Live-Aufnahme · Platzhalter" data-en="Live Recording · Placeholder">Live-Aufnahme · Platzhalter</p>
+      </div>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-item">
+      <div class="video-thumb">
+        <div class="video-ph-stripes"></div>
+        <div class="video-play-btn">
+          <svg viewBox="0 0 16 16"><path d="M4 2 L14 8 L4 14 Z"/></svg>
+        </div>
+        <div class="video-ph-label" data-de="Video Platzhalter" data-en="Video Placeholder">Video Platzhalter</div>
+      </div>
+      <div class="video-caption">
+        <h3 data-de="Carl Reinecke — Tarantelle" data-en="Carl Reinecke — Tarantella">Carl Reinecke — Tarantelle</h3>
+        <p data-de="Konzertmitschnitt · Platzhalter" data-en="Concert Recording · Placeholder">Konzertmitschnitt · Platzhalter</p>
+      </div>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-item">
+      <div class="video-thumb">
+        <div class="video-ph-stripes"></div>
+        <div class="video-play-btn">
+          <svg viewBox="0 0 16 16"><path d="M4 2 L14 8 L4 14 Z"/></svg>
+        </div>
+        <div class="video-ph-label" data-de="Video Platzhalter" data-en="Video Placeholder">Video Platzhalter</div>
+      </div>
+      <div class="video-caption">
+        <h3 data-de="D. G. Türk — The Storm" data-en="D. G. Türk — The Storm">D. G. Türk — The Storm</h3>
+        <p data-de="Studioaufnahme · Platzhalter" data-en="Studio Recording · Placeholder">Studioaufnahme · Platzhalter</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── AUDIO ──────────── -->
+<div id="audio">
+  <div class="audio-inner">
+    <div class="section-label">
+      <span data-de="Hörproben" data-en="Audio Samples">Hörproben</span>
+    </div>
+    <h2 class="section-title" data-de="<em>Klang</em> erleben" data-en="Experience the <em>Sound</em>"><em>Klang</em> erleben</h2>
+
+    <div class="audio-tracks" id="audio-tracks">
+      <!-- Populated by JS -->
+    </div>
+    <div class="audio-ph-note">
+      <span data-de="Audiodateien werden hier eingebunden" data-en="Audio files will be embedded here">Audiodateien werden hier eingebunden</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── PRESS ──────────── -->
+<section id="press">
+  <div class="section-label">
+    <span data-de="Presse" data-en="Press">Presse</span>
+  </div>
+  <h2 class="section-title" data-de="Was man <em>sagt</em>" data-en="What they <em>say</em>">Was man <em>sagt</em></h2>
+
+  <div class="press-quotes">
+    <div class="press-quote">
+      <blockquote data-de="&ldquo;Eine pianistische Stimme von bemerkenswerter Reife und Ausdruckskraft — technische Brillanz verbunden mit echtem musikalischen Gespür.&rdquo;" data-en="&ldquo;A pianistic voice of remarkable maturity and expressiveness — technical brilliance combined with genuine musical sensitivity.&rdquo;">
+        &ldquo;Eine pianistische Stimme von bemerkenswerter Reife und Ausdruckskraft — technische Brillanz verbunden mit echtem musikalischen Gespür.&rdquo;
+      </blockquote>
+      <div class="press-source">Presse · Platzhalter</div>
+    </div>
+    <div class="press-quote">
+      <blockquote data-de="&ldquo;Schäfer spielt mit einer erzählerischen Energie, die das Publikum von der ersten bis zur letzten Note in ihren Bann zieht.&rdquo;" data-en="&ldquo;Schäfer plays with a narrative energy that captivates the audience from the first to the last note.&rdquo;">
+        &ldquo;Schäfer spielt mit einer erzählerischen Energie, die das Publikum von der ersten bis zur letzten Note in ihren Bann zieht.&rdquo;
+      </blockquote>
+      <div class="press-source">Konzertbericht · Platzhalter</div>
+    </div>
+    <div class="press-quote">
+      <blockquote data-de="&ldquo;Lyrische Tiefe und virtuose Lebendigkeit vereinen sich in einem Spiel, das weit über das Alter des Pianisten hinausweist.&rdquo;" data-en="&ldquo;Lyrical depth and virtuosic vitality combine in a playing style that far exceeds the pianist's age.&rdquo;">
+        &ldquo;Lyrische Tiefe und virtuose Lebendigkeit vereinen sich in einem Spiel, das weit über das Alter des Pianisten hinausweist.&rdquo;
+      </blockquote>
+      <div class="press-source">Kritik · Platzhalter</div>
+    </div>
+  </div>
+
+  <div class="press-logos">
+    <div class="press-logo-ph"><span>Zeitung</span></div>
+    <div class="press-logo-ph"><span>Magazin</span></div>
+    <div class="press-logo-ph"><span>Radio</span></div>
+    <div class="press-logo-ph"><span>Online</span></div>
+    <div class="press-logo-ph"><span>Programm</span></div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── GALLERY ──────────── -->
+<div id="gallery">
+  <div class="gallery-inner">
+    <div class="section-label">
+      <span data-de="Galerie" data-en="Gallery">Galerie</span>
+    </div>
+    <h2 class="section-title" data-de="Foto<em>galerie</em>" data-en="Photo<em>gallery</em>">Foto<em>galerie</em></h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-ph" style="background:#0d0d0d;">
+          <div class="gallery-ph-stripes"></div>
+          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="13" r="5" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+            <path d="M5 28 Q16 20 27 28" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+          </svg>
+          <div class="gallery-ph-text" data-de="Künstlerportrait" data-en="Artist Portrait">Künstlerportrait</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph" style="background:#111;">
+          <div class="gallery-ph-stripes"></div>
+          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
+            <rect x="2" y="10" width="28" height="16" rx="1" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+            <rect x="7" y="5" width="4" height="8" rx="0.5" fill="rgba(200,169,110,0.2)"/>
+            <rect x="14" y="5" width="4" height="8" rx="0.5" fill="rgba(200,169,110,0.2)"/>
+            <rect x="21" y="5" width="4" height="8" rx="0.5" fill="rgba(200,169,110,0.2)"/>
+          </svg>
+          <div class="gallery-ph-text" data-de="Konzertsaal" data-en="Concert Hall">Konzertsaal</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph" style="background:#0f0f0f;">
+          <div class="gallery-ph-stripes"></div>
+          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
+            <path d="M4 24 L4 16 L10 19 L16 12 L22 16 L28 24" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+          </svg>
+          <div class="gallery-ph-text" data-de="Bühnenfoto" data-en="Stage Photo">Bühnenfoto</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph" style="background:#121212;">
+          <div class="gallery-ph-stripes"></div>
+          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
+            <rect x="4" y="4" width="24" height="24" rx="1" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+            <line x1="12" y1="4" x2="12" y2="28" stroke="rgba(200,169,110,0.2)" stroke-width="1"/>
+          </svg>
+          <div class="gallery-ph-text" data-de="Hände am Klavier" data-en="Hands on Piano">Hände am Klavier</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-ph" style="background:#0e0e0e;">
+          <div class="gallery-ph-stripes"></div>
+          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="10" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+            <path d="M12 10 L22 16 L12 22 Z" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
+          </svg>
+          <div class="gallery-ph-text" data-de="Probe / Studio" data-en="Rehearsal / Studio">Probe / Studio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ──────────── CONTACT ──────────── -->
+<div id="contact">
+  <div class="contact-left">
+    <div class="section-label">
+      <span data-de="Kontakt" data-en="Contact">Kontakt</span>
+    </div>
+    <h2>
+      <span data-de="Booking &amp; <em>Anfragen</em>" data-en="Booking &amp; <em>Enquiries</em>">Booking &amp; <em>Anfragen</em></span>
+    </h2>
+    <p data-de="Für Konzertanfragen, Engagements und alle weiteren Anliegen stehen wir Ihnen gerne zur Verfügung." data-en="For concert enquiries, engagements and all other matters, we are happy to assist you.">
+      Für Konzertanfragen, Engagements und alle weiteren Anliegen stehen wir Ihnen gerne zur Verfügung.
+    </p>
+
+    <div class="contact-blocks">
+      <div>
+        <div class="contact-block-label" data-de="E-Mail" data-en="Email">E-Mail</div>
+        <div class="contact-block-text">
+          <a href="mailto:kontakt@friedrichschaefer.de">kontakt@friedrichschaefer.de</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-block-label" data-de="Management" data-en="Management">Management</div>
+        <div class="contact-block-text" data-de="Management-Kontakt<br>wird hier eingetragen" data-en="Management contact<br>will be entered here">
+          Management-Kontakt<br>wird hier eingetragen
+        </div>
+      </div>
+      <div>
+        <div class="contact-block-label" data-de="Social Media" data-en="Social Media">Social Media</div>
+        <div class="contact-block-text">
+          <a href="#">Instagram</a> &nbsp;·&nbsp; <a href="#">YouTube</a> &nbsp;·&nbsp; <a href="#">Facebook</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right">
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-field">
+        <label data-de="Ihr Name" data-en="Your Name">Ihr Name</label>
+        <input type="text" placeholder="">
+      </div>
+      <div class="form-field">
+        <label data-de="E-Mail-Adresse" data-en="Email Address">E-Mail-Adresse</label>
+        <input type="email" placeholder="">
+      </div>
+      <div class="form-field">
+        <label data-de="Betreff" data-en="Subject">Betreff</label>
+        <input type="text" placeholder="">
+      </div>
+      <div class="form-field">
+        <label data-de="Ihre Nachricht" data-en="Your Message">Ihre Nachricht</label>
+        <textarea placeholder=""></textarea>
+      </div>
+      <button class="form-submit" type="submit">
+        <span data-de="Nachricht senden" data-en="Send Message">Nachricht senden</span>
+        <span>→</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ──────────── FOOTER ──────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-name">Friedrich Schäfer</div>
+    <ul class="footer-social">
+      <li><a href="#" data-de="Instagram" data-en="Instagram">Instagram</a></li>
+      <li><a href="#" data-de="YouTube" data-en="YouTube">YouTube</a></li>
+      <li><a href="#" data-de="Facebook" data-en="Facebook">Facebook</a></li>
+    </ul>
+    <div class="footer-copy">
+      <span data-de="© 2026 Friedrich Schäfer" data-en="© 2026 Friedrich Schäfer">© 2026 Friedrich Schäfer</span>
+      &nbsp;·&nbsp;
+      <a href="impressum.html" style="color:rgba(244,240,232,0.2);text-decoration:none;border-bottom:1px solid rgba(200,169,110,0.15);transition:color 0.3s;" onmouseover="this.style.color='oklch(72% 0.085 72)'" onmouseout="this.style.color='rgba(244,240,232,0.2)'" data-de="Impressum" data-en="Imprint">Impressum</a>
+      &nbsp;·&nbsp;
+      <a href="datenschutz.html" style="color:rgba(244,240,232,0.2);text-decoration:none;border-bottom:1px solid rgba(200,169,110,0.15);transition:color 0.3s;" onmouseover="this.style.color='oklch(72% 0.085 72)'" onmouseout="this.style.color='rgba(244,240,232,0.2)'" data-de="Datenschutz" data-en="Privacy">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ──────────── REACT TWEAKS ──────────── -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script>
+// Tweak defaults (host reads/writes this block on disk)
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "colorScheme": "gold-black",
+  "heroFont": "cormorant",
+  "showFloatingElements": true,
+  "accentColor": "gold"
+}/*EDITMODE-END*/;
+
+// Mount is defined inside tweaks-panel.jsx (same Babel scope as TweaksPanel/useTweaks)
+function waitAndMount() {
+  if (typeof window.mountFriedrichTweaks === 'function') {
+    window.mountFriedrichTweaks();
+  } else {
+    setTimeout(waitAndMount, 50);
+  }
+}
+waitAndMount();
+</script>
+
+<div id="tweaks-root"></div>
+
+<script>
+// ──────────── INTERSECTION OBSERVER (global, used by render fns) ────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.classList.contains('reveal') ||
+        el.classList.contains('reveal-left') ||
+        el.classList.contains('reveal-right') ||
+        el.classList.contains('reveal-scale')) {
+      el.classList.add('visible');
+    }
+    if (el.classList.contains('section-divider')) el.classList.add('visible');
+    if (el.classList.contains('section-label'))   el.classList.add('line-visible');
+    if (el.classList.contains('bio-awards'))       el.classList.add('visible');
+    if (el.classList.contains('section-title')) {
+      wrapTitleWords(el);
+      requestAnimationFrame(() => el.classList.add('title-reveal-visible'));
+    }
+    io.unobserve(el);
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+// ──────────── HERO SLIDESHOW ────────────
+const slides = document.querySelectorAll('.hero-slide');
+const dotsContainer = document.getElementById('hero-dots');
+let currentSlide = 0;
+
+slides.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+  dot.addEventListener('click', () => goToSlide(i));
+  dotsContainer.appendChild(dot);
+});
+
+function goToSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dotsContainer.children[currentSlide].classList.remove('active');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dotsContainer.children[currentSlide].classList.add('active');
+}
+
+setInterval(() => {
+  goToSlide((currentSlide + 1) % slides.length);
+}, 5000);
+
+// ──────────── NAV SCROLL ────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ──────────── CONCERT DATA ────────────
+const concertsDE = [
+  { day: '12', month: 'Jun', title: 'Kammerkonzert', program: 'Grieg · Reinecke · Türk', city: 'Freiberg', venue: 'Dom St. Marien' },
+  { day: '24', month: 'Jun', title: 'Sommerkonzert', program: 'Brahms · Chopin · Schubert', city: 'Chemnitz', venue: 'Städtische Musikschule' },
+  { day: '08', month: 'Jul', title: 'Klavierabend', program: 'Soloprogramm · Platzhalter', city: 'Dresden', venue: 'Hochschule für Musik' },
+  { day: '20', month: 'Sep', title: 'Herbstkonzert', program: 'Gavrilin · Reinecke · Brahms', city: 'Leipzig', venue: 'Mendelssohn-Haus' },
+];
+
+const concertsEN = [
+  { day: '12', month: 'Jun', title: 'Chamber Concert', program: 'Grieg · Reinecke · Türk', city: 'Freiberg', venue: 'Dom St. Marien' },
+  { day: '24', month: 'Jun', title: 'Summer Concert', program: 'Brahms · Chopin · Schubert', city: 'Chemnitz', venue: 'Municipal Music School' },
+  { day: '08', month: 'Jul', title: 'Piano Recital', program: 'Solo Programme · Placeholder', city: 'Dresden', venue: 'Hochschule für Musik' },
+  { day: '20', month: 'Sep', title: 'Autumn Concert', program: 'Gavrilin · Reinecke · Brahms', city: 'Leipzig', venue: 'Mendelssohn-Haus' },
+];
+
+function renderConcerts(lang) {
+  const list = document.getElementById('concert-list');
+  const data = lang === 'de' ? concertsDE : concertsEN;
+  list.innerHTML = data.map((c, i) => `
+    <div class="concert-item reveal" style="transition-delay:${i * 0.07}s">
+      <div class="concert-date-block">
+        <div class="concert-day">${c.day}</div>
+        <div class="concert-month">${c.month}</div>
+      </div>
+      <div class="concert-info">
+        <h3>${c.title}</h3>
+        <p>${c.program}</p>
+      </div>
+      <div class="concert-location">
+        <span class="concert-city">${c.city}</span>
+        <div class="concert-venue">${c.venue}</div>
+      </div>
+    </div>
+  `).join('');
+  // observe newly created items
+  list.querySelectorAll('.concert-item').forEach(el => io.observe(el));
+}
+
+// ──────────── AUDIO TRACKS ────────────
+const tracksDE = [
+  { num: '01', title: 'Edvard Grieg — Zug der Zwerge', composer: 'Lyrische Stücke op. 54 Nr. 3', dur: '3:42' },
+  { num: '02', title: 'Carl Reinecke — Tarantelle', composer: 'Klavierstücke für die Jugend', dur: '2:15' },
+  { num: '03', title: 'Valery Gavrilin — Little Clock', composer: 'Charakterstück', dur: '1:58' },
+  { num: '04', title: 'Daniel Gottlob Türk — The Storm', composer: 'Klavierstück', dur: '2:34' },
+  { num: '05', title: 'Hörprobe · Platzhalter', composer: 'Weitere Aufnahmen folgen', dur: '—' },
+];
+
+const tracksEN = [
+  { num: '01', title: 'Edvard Grieg — March of the Dwarfs', composer: 'Lyric Pieces op. 54 No. 3', dur: '3:42' },
+  { num: '02', title: 'Carl Reinecke — Tarantella', composer: 'Piano Pieces for Youth', dur: '2:15' },
+  { num: '03', title: 'Valery Gavrilin — Little Clock', composer: 'Character Piece', dur: '1:58' },
+  { num: '04', title: 'Daniel Gottlob Türk — The Storm', composer: 'Piano Piece', dur: '2:34' },
+  { num: '05', title: 'Audio Sample · Placeholder', composer: 'More recordings to follow', dur: '—' },
+];
+
+const waveHeights = [[8,14,20,12,18,10,22,14,8,16,20,10,16,12,18,8,14,22,10,16],
+                     [12,18,8,22,14,10,20,16,12,18,8,16,22,10,14,20,8,16,12,18],
+                     [16,10,22,8,18,14,12,20,10,16,22,8,14,18,10,20,12,16,8,22],
+                     [10,20,14,18,8,16,22,12,18,10,20,14,8,16,12,22,10,18,16,8],
+                     [14,8,18,12,20,10,16,22,8,14,18,12,20,8,16,10,22,14,8,18]];
+
+function renderTracks(lang) {
+  const container = document.getElementById('audio-tracks');
+  const data = lang === 'de' ? tracksDE : tracksEN;
+  container.innerHTML = data.map((t, i) => `
+    <div class="audio-track reveal" style="transition-delay:${i * 0.08}s">
+      <div class="track-num">${t.num}</div>
+      <div class="track-info">
+        <h4>${t.title}</h4>
+        <span>${t.composer}</span>
+      </div>
+      <div class="track-waveform">
+        ${waveHeights[i].map(h => `<span style="height:${h}px"></span>`).join('')}
+      </div>
+      <div class="track-duration">${t.dur}</div>
+      <button class="track-play">
+        <svg viewBox="0 0 16 16"><path d="M4 2 L14 8 L4 14 Z"/></svg>
+      </button>
+    </div>
+  `).join('');
+  container.querySelectorAll('.audio-track').forEach(el => io.observe(el));
+}
+
+// ──────────── CURSOR GLOW ────────────
+const cursorGlow = document.getElementById('cursor-glow');
+let mouseX = 0, mouseY = 0, glowX = 0, glowY = 0;
+let glowRaf;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursorGlow.style.opacity = '1';
+  if (!glowRaf) glowRaf = requestAnimationFrame(animateGlow);
+});
+
+document.addEventListener('mouseleave', () => {
+  cursorGlow.style.opacity = '0';
+});
+
+function animateGlow() {
+  glowX += (mouseX - glowX) * 0.08;
+  glowY += (mouseY - glowY) * 0.08;
+  cursorGlow.style.left = glowX + 'px';
+  cursorGlow.style.top = glowY + 'px';
+  glowRaf = requestAnimationFrame(animateGlow);
+}
+
+// ──────────── HERO PARALLAX ────────────
+const heroContent = document.getElementById('hero-content');
+const heroSlides = document.getElementById('hero-slides');
+const heroFloats = document.querySelectorAll('.hero-floating');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  if (scrollY < window.innerHeight) {
+    // Content moves up faster = parallax depth
+    if (heroContent) {
+      heroContent.style.transform = `translateY(${scrollY * 0.25}px)`;
+      heroContent.style.opacity = 1 - (scrollY / (window.innerHeight * 0.6));
+    }
+    // Background slides move slower
+    if (heroSlides) {
+      heroSlides.style.transform = `translateY(${scrollY * 0.15}px)`;
+    }
+    // Floating elements drift at different speeds
+    heroFloats.forEach((el, i) => {
+      const speed = [0.12, 0.18, 0.08][i] || 0.1;
+      el.style.transform = `translateY(${scrollY * speed}px)`;
+    });
+  }
+}, { passive: true });
+
+// ──────────── SECTION TITLE WORD REVEAL ────────────
+function wrapTitleWords(el) {
+  if (!el || el.dataset.wordWrapped) return;
+  el.dataset.wordWrapped = '1';
+
+  // Walk child nodes to handle mixed text + <em>
+  const fragment = document.createDocumentFragment();
+  el.childNodes.forEach(node => {
+    if (node.nodeType === 3) { // text node
+      node.textContent.split(/(\s+)/).forEach(part => {
+        if (/^\s+$/.test(part)) {
+          fragment.appendChild(document.createTextNode(part));
+        } else if (part) {
+          const wrap = document.createElement('span');
+          wrap.className = 'title-word';
+          wrap.innerHTML = `<span class="title-word-inner">${part}</span>`;
+          fragment.appendChild(wrap);
+        }
+      });
+    } else if (node.nodeType === 1 && node.tagName === 'EM') {
+      const wrap = document.createElement('span');
+      wrap.className = 'title-word';
+      wrap.innerHTML = `<span class="title-word-inner"><em>${node.textContent}</em></span>`;
+      fragment.appendChild(wrap);
+    } else {
+      fragment.appendChild(node.cloneNode(true));
+    }
+  });
+  el.innerHTML = '';
+  el.appendChild(fragment);
+}
+
+// Observe everything
+document.querySelectorAll('.section-divider').forEach(el => io.observe(el));
+document.querySelectorAll('.section-label').forEach(el => io.observe(el));
+document.querySelectorAll('.section-title').forEach(el => io.observe(el));
+document.querySelectorAll('.bio-awards').forEach(el => io.observe(el));
+
+// Add reveal classes programmatically to key elements
+const revealTargets = [
+  ['.bio-text-col', 'reveal-right'],
+  ['.bio-image-col', 'reveal-left'],
+  ['.hero-quote', null],
+  ['.press-quote', 'reveal-scale'],
+  ['.gallery-item', 'reveal-scale'],
+  ['.video-item', 'reveal'],
+  ['.contact-left', 'reveal-left'],
+  ['.contact-right', 'reveal-right'],
+  ['.concerts-all-link', 'reveal'],
+  ['.audio-ph-note', 'reveal'],
+  ['.press-logos', 'reveal'],
+  ['.youtube-placeholder', 'reveal-scale'],
+];
+
+revealTargets.forEach(([selector, cls]) => {
+  document.querySelectorAll(selector).forEach((el, i) => {
+    const c = cls || 'reveal';
+    if (!el.classList.contains(c)) el.classList.add(c);
+    if (i > 0) el.classList.add(`stagger-${Math.min(i, 5)}`);
+    io.observe(el);
+  });
+});
+
+// ──────────── LANGUAGE SWITCH ────────────
+let currentLang = 'de';
+
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang;
+
+  document.querySelectorAll('[data-de][data-en]').forEach(el => {
+    const text = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
+    if (text) el.innerHTML = text;
+  });
+
+  document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  renderConcerts(lang);
+  renderTracks(lang);
+
+  // Update all-concerts link text
+  const allLink = document.querySelector('.concerts-all-link span');
+  if (allLink) allLink.textContent = lang === 'de' ? 'Alle Konzerte' : 'All Concerts';
+}
+
+document.getElementById('btn-de').addEventListener('click', () => applyLang('de'));
+document.getElementById('btn-en').addEventListener('click', () => applyLang('en'));
+
+// Init
+applyLang('de');
+</script>
+</body>
+</html>

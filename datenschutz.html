@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz — Friedrich Schäfer</title>
+<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #090909;
+    --gold: oklch(72% 0.085 72);
+    --ivory: oklch(94% 0.018 80);
+    --ivory-dim: oklch(78% 0.018 80);
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Outfit', Helvetica Neue, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--serif);
+    min-height: 100vh;
+  }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 60px;
+    background: rgba(9,9,9,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,169,110,0.12);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-back {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-back:hover { color: var(--gold); }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 160px 60px 120px;
+  }
+  .page-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .page-label::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 60px;
+    line-height: 1.1;
+  }
+  h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 48px;
+    margin-bottom: 16px;
+  }
+  p {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ivory-dim);
+    margin-bottom: 12px;
+  }
+  a {
+    color: var(--ivory-dim);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200,169,110,0.3);
+    transition: color 0.3s, border-color 0.3s;
+  }
+  a:hover { color: var(--gold); border-color: var(--gold); }
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(200,169,110,0.2), transparent);
+    margin: 60px 0;
+  }
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 60px;
+  }
+  .footer-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .footer-copy {
+    font-family: var(--sans);
+    font-size: 10px;
+    color: rgba(244,240,232,0.2);
+    letter-spacing: 0.05em;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+  .footer-links a {
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(244,240,232,0.3);
+    text-decoration: none;
+    border: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  @media (max-width: 700px) {
+    nav { padding: 18px 24px; }
+    main { padding: 120px 24px 80px; }
+    footer { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Friedrich Schäfer</a>
+  <a href="index.html" class="nav-back">← Zurück</a>
+</nav>
+
+<main>
+  <div class="page-label">Rechtliches</div>
+  <h1>Datenschutz&shy;erklärung</h1>
+
+  <h2>1. Datenschutz auf einen Blick</h2>
+  <p>
+    Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
+  </p>
+
+  <h2>2. Allgemeine Hinweise und Pflichtinformationen</h2>
+  <p>
+    Der Betreiber dieser Seiten nimmt den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
+  </p>
+  <p>
+    Verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:<br>
+    Friedrich Schäfer<br>
+    [Adresse eintragen]<br>
+    E-Mail: <a href="mailto:kontakt@friedrichschaefer.de">kontakt@friedrichschaefer.de</a>
+  </p>
+
+  <div class="divider"></div>
+
+  <h2>3. Datenerfassung auf dieser Website</h2>
+  <p>
+    <strong>Cookies:</strong> Diese Website verwendet keine Tracking-Cookies. Es werden ausschließlich technisch notwendige Cookies verwendet, sofern erforderlich.
+  </p>
+  <p>
+    <strong>Kontaktformular:</strong> Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+  </p>
+  <p>
+    <strong>Server-Log-Dateien:</strong> Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt. Diese Daten sind nicht bestimmten Personen zuordenbar.
+  </p>
+
+  <div class="divider"></div>
+
+  <h2>4. Eingebettete Inhalte (YouTube)</h2>
+  <p>
+    Diese Website kann Videos von YouTube einbetten. Betreiber des Portals ist die Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Wenn Sie eine Seite mit einem eingebetteten YouTube-Video besuchen, wird eine Verbindung zu den Servern von YouTube hergestellt. Dabei wird YouTube mitgeteilt, welche unserer Seiten Sie besucht haben.
+  </p>
+  <p>
+    Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von YouTube unter: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>
+  </p>
+
+  <div class="divider"></div>
+
+  <h2>5. Ihre Rechte</h2>
+  <p>
+    Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit an uns wenden.
+  </p>
+
+  <h2>6. Beschwerderecht</h2>
+  <p>
+    Im Falle datenschutzrechtlicher Verstöße steht dem Betroffenen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu. Zuständige Aufsichtsbehörde in datenschutzrechtlichen Fragen ist der Landesdatenschutzbeauftragte des Bundeslandes, in dem unser Unternehmen seinen Sitz hat.
+  </p>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Friedrich Schäfer</div>
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
