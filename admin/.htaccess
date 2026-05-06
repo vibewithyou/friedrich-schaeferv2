@@ -1,0 +1,16 @@
+# Admin-Bereich blockieren für direkte Verzeichnislistung
+Options -Indexes
+
+# Sicherstellen, dass /admin/ standardmäßig zur Loginseite leitet
+DirectoryIndex index.php login.php
+
+# Alle Anfragen ohne aktive Session werden in PHP über require_admin() abgefangen.
+# Falls zusätzlich eine HTTP-Basic-Auth gewünscht ist, hier aktivieren:
+# AuthType Basic
+# AuthName "Admin"
+# AuthUserFile /pfad/zu/.htpasswd
+# Require valid-user
+
+<FilesMatch "\.(sql|md|env|ini)$">
+  Require all denied
+</FilesMatch>

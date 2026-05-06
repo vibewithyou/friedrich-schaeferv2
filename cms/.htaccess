@@ -1,0 +1,7 @@
+# Schutz für Konfigurations- und SQL-Dateien
+<FilesMatch "\.(sql|md|env|ini)$">
+  Require all denied
+</FilesMatch>
+<FilesMatch "^(config\.php|db\.php)$">
+  Require all denied
+</FilesMatch>

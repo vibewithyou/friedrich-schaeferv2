@@ -158,6 +158,125 @@
 
   .hero-slide.active { opacity: 1; }
 
+  /* Video slide */
+  .hero-slide-video {
+    background: #000;
+  }
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55) contrast(1.05) saturate(0.9);
+  }
+  .hero-video-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 90% at 50% 50%,
+        rgba(9,9,9,0) 0%,
+        rgba(9,9,9,0.25) 55%,
+        rgba(9,9,9,0.75) 85%,
+        rgba(9,9,9,1) 100%),
+      linear-gradient(to bottom,
+        rgba(9,9,9,0.35) 0%,
+        rgba(9,9,9,0) 30%,
+        rgba(9,9,9,0) 70%,
+        rgba(9,9,9,0.6) 100%);
+  }
+
+  .hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,169,110,0.25);
+    background: rgba(9,9,9,0.4);
+    backdrop-filter: blur(6px);
+    color: var(--gold);
+    font-family: var(--serif);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.4s forwards;
+  }
+  .hero-arrow:hover {
+    background: rgba(200,169,110,0.12);
+    border-color: var(--gold);
+  }
+  .hero-arrow-prev { left: 32px; }
+  .hero-arrow-next { right: 32px; }
+  @media (max-width: 700px) {
+    .hero-arrow { width: 38px; height: 38px; font-size: 22px; }
+    .hero-arrow-prev { left: 12px; }
+    .hero-arrow-next { right: 12px; }
+  }
+
+  /* Audio indicator */
+  .hero-audio-toggle {
+    position: absolute;
+    bottom: 32px;
+    left: 60px;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(9,9,9,0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(200,169,110,0.2);
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.6s forwards;
+  }
+  .hero-audio-toggle:hover {
+    border-color: rgba(200,169,110,0.5);
+    background: rgba(9,9,9,0.7);
+  }
+  .hero-audio-toggle .audio-bars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 12px;
+  }
+  .hero-audio-toggle .audio-bars span {
+    display: block;
+    width: 2px;
+    background: var(--gold);
+    border-radius: 1px;
+    animation: audioBar 1.2s ease-in-out infinite;
+  }
+  .hero-audio-toggle.muted .audio-bars span {
+    animation: none;
+    opacity: 0.4;
+  }
+  .hero-audio-toggle .audio-bars span:nth-child(1) { height: 4px; animation-delay: 0s; }
+  .hero-audio-toggle .audio-bars span:nth-child(2) { height: 10px; animation-delay: 0.15s; }
+  .hero-audio-toggle .audio-bars span:nth-child(3) { height: 6px; animation-delay: 0.3s; }
+  .hero-audio-toggle .audio-bars span:nth-child(4) { height: 12px; animation-delay: 0.45s; }
+  @keyframes audioBar {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+  }
+  .hero-audio-toggle .audio-label {
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ivory-dim);
+  }
+
   /* Placeholder slides with atmospheric gradients */
   .hero-slide:nth-child(1) {
     background: linear-gradient(160deg, #0a0806 0%, #1a1208 40%, #0d0d0d 100%);
@@ -459,22 +578,57 @@
   .bio-photo-placeholder {
     width: 100%;
     aspect-ratio: 3/4;
-    border: 1px dashed rgba(200,169,110,0.25);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 14px;
-    background: linear-gradient(160deg, #111 0%, #0d0d0d 100%);
     position: relative;
-    overflow: hidden;
+    overflow: visible;
+    background: transparent;
   }
 
-  .bio-photo-placeholder::before {
-    content: '';
+  .bio-portrait {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 20%, rgba(200,169,110,0.04) 0%, transparent 70%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Soft organic feather into the dark background */
+    -webkit-mask-image:
+      radial-gradient(ellipse 95% 98% at 50% 50%, #000 65%, rgba(0,0,0,0.7) 85%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    -webkit-mask-composite: source-in;
+            mask-image:
+      radial-gradient(ellipse 95% 98% at 50% 50%, #000 65%, rgba(0,0,0,0.7) 85%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 7%, #000 93%, transparent 100%),
+      linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+    mask-composite: intersect;
+    filter: contrast(1.02) saturate(0.92);
+  }
+
+  .bio-portrait-glow {
+    position: absolute;
+    inset: -10%;
+    background: radial-gradient(ellipse 50% 50% at 42% 45%, rgba(200,169,110,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .bio-photo-caption {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 9px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.55);
+    z-index: 2;
+    pointer-events: none;
   }
 
   .ph-label {
@@ -1451,11 +1605,135 @@
   .bio-awards.visible .award-item:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
   .bio-awards.visible .award-item:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.22s; }
 
+  /* ─── MOBILE MENU (hamburger + side drawer) ────────────── */
+  .mobile-menu-btn {
+    display: none;
+    position: relative;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+  }
+  .mobile-menu-btn span {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    height: 1px;
+    background: var(--gold);
+    transition: transform 0.35s ease, opacity 0.25s ease, top 0.35s ease;
+  }
+  .mobile-menu-btn span:nth-child(1) { top: 13px; }
+  .mobile-menu-btn span:nth-child(2) { top: 18px; width: 14px; left: 14px; }
+  .mobile-menu-btn span:nth-child(3) { top: 23px; }
+  .mobile-menu-btn.open span:nth-child(1) { top: 18px; transform: rotate(45deg); }
+  .mobile-menu-btn.open span:nth-child(2) { opacity: 0; }
+  .mobile-menu-btn.open span:nth-child(3) { top: 18px; transform: rotate(-45deg); }
+
+  .mobile-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(82vw, 340px);
+    background: rgba(8, 8, 8, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 1px solid rgba(200, 169, 110, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.45s cubic-bezier(0.5, 0, 0.2, 1);
+    z-index: 1050;
+    padding: 100px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    pointer-events: none;
+  }
+  .mobile-drawer.open {
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .mobile-drawer a {
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    letter-spacing: 0.5px;
+    transition: color 0.25s ease, padding-left 0.3s ease;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .mobile-drawer.open a {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.4s ease, transform 0.4s ease, color 0.25s ease, padding-left 0.3s ease;
+  }
+  .mobile-drawer.open a:nth-child(1) { transition-delay: 0.10s; }
+  .mobile-drawer.open a:nth-child(2) { transition-delay: 0.15s; }
+  .mobile-drawer.open a:nth-child(3) { transition-delay: 0.20s; }
+  .mobile-drawer.open a:nth-child(4) { transition-delay: 0.25s; }
+  .mobile-drawer.open a:nth-child(5) { transition-delay: 0.30s; }
+  .mobile-drawer.open a:nth-child(6) { transition-delay: 0.35s; }
+  .mobile-drawer.open a:nth-child(7) { transition-delay: 0.40s; }
+  .mobile-drawer a:hover, .mobile-drawer a:active {
+    color: var(--gold);
+    padding-left: 6px;
+  }
+  .mobile-drawer-foot {
+    margin-top: auto;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease 0.5s, transform 0.4s ease 0.5s;
+  }
+  .mobile-drawer.open .mobile-drawer-foot {
+    opacity: 1;
+    transform: none;
+  }
+  .mobile-drawer-foot button {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(200, 169, 110, 0.3);
+    color: var(--cream);
+    padding: 10px 0;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .mobile-drawer-foot button.active {
+    background: rgba(200, 169, 110, 0.12);
+    color: var(--gold);
+  }
+
+  .mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 1040;
+  }
+  .mobile-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   /* ─── MOBILE ─────────────────────────────────────────────── */
   @media (max-width: 900px) {
     nav { padding: 20px 24px; }
     nav.scrolled { padding: 14px 24px; }
     .nav-links { display: none; }
+    .lang-toggle { display: none; }
+    .mobile-menu-btn { display: block; }
 
     section { padding: 80px 24px; }
 
@@ -1524,24 +1802,38 @@
     <button class="active" id="btn-de">DE</button>
     <button id="btn-en">EN</button>
   </div>
+  <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-backdrop" id="mobile-backdrop"></div>
+<aside class="mobile-drawer" id="mobile-drawer">
+  <a href="#biography" data-de="Biografie" data-en="Biography">Biografie</a>
+  <a href="#concerts" data-de="Konzerte" data-en="Concerts">Konzerte</a>
+  <a href="#videos" data-de="Videos" data-en="Videos">Videos</a>
+  <a href="#audio" data-de="Hörproben" data-en="Audio">Hörproben</a>
+  <a href="#press" data-de="Presse" data-en="Press">Presse</a>
+  <a href="#gallery" data-de="Galerie" data-en="Gallery">Galerie</a>
+  <a href="#contact" data-de="Kontakt" data-en="Contact">Kontakt</a>
+  <div class="mobile-drawer-foot">
+    <button class="active" id="m-btn-de">DE</button>
+    <button id="m-btn-en">EN</button>
+  </div>
+</aside>
 
 <!-- ──────────── HERO ──────────── -->
 <section id="hero">
   <div class="hero-slides" id="hero-slides">
-    <!-- Slide 1 -->
-    <div class="hero-slide active">
-      <div class="hero-slide-placeholder">
-        <div class="slide-ph-box">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="0.5" y="0.5" width="39" height="39" stroke="rgba(200,169,110,0.4)" stroke-dasharray="4 4"/>
-            <circle cx="20" cy="16" r="6" stroke="rgba(200,169,110,0.4)" fill="none"/>
-            <path d="M8 34 Q20 26 32 34" stroke="rgba(200,169,110,0.4)" fill="none"/>
-          </svg>
-          <span>Portrait Foto</span>
-          <small>Hochformat · Bühnenbeleuchtung</small>
-        </div>
-      </div>
+    <!-- Slide 1 — Hero video -->
+    <div class="hero-slide active hero-slide-video">
+      <video id="hero-video"
+             class="hero-video"
+             src="hero-video.mp4"
+             playsinline
+             muted
+             preload="auto"></video>
+      <div class="hero-video-vignette"></div>
     </div>
     <!-- Slide 2 -->
     <div class="hero-slide">
@@ -1594,8 +1886,20 @@
     </div>
   </div>
 
+  <!-- Slide nav arrows -->
+  <button class="hero-arrow hero-arrow-prev" id="hero-prev" aria-label="Previous">‹</button>
+  <button class="hero-arrow hero-arrow-next" id="hero-next" aria-label="Next">›</button>
+
   <!-- Slide dots -->
   <div class="hero-dots" id="hero-dots"></div>
+
+  <!-- Audio toggle -->
+  <button class="hero-audio-toggle" id="hero-audio-toggle" aria-label="Toggle audio">
+    <div class="audio-bars">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <span class="audio-label" id="hero-audio-label" data-de="Ton aus" data-en="Sound off">Ton aus</span>
+  </button>
 
   <!-- Scroll hint -->
   <div class="scroll-hint">
@@ -1610,12 +1914,9 @@
 <div id="biography">
   <div class="bio-image-col reveal-left">
     <div class="bio-photo-placeholder">
-      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-        <circle cx="24" cy="20" r="8" stroke="rgba(200,169,110,0.35)" fill="none" stroke-width="1.5"/>
-        <path d="M8 44 Q24 34 40 44" stroke="rgba(200,169,110,0.35)" fill="none" stroke-width="1.5"/>
-      </svg>
-      <div class="ph-label">Portrait</div>
-      <div class="ph-desc">Künstlerfoto<br>ca. 3:4 Format<br>Bühne / Studio</div>
+      <div class="bio-portrait-glow"></div>
+      <img class="bio-portrait" src="portrait.jpg" alt="Friedrich Schäfer Portrait" loading="lazy">
+      <div class="bio-photo-caption" data-de="Friedrich Schäfer · Karlsbad" data-en="Friedrich Schäfer · Karlovy Vary">Friedrich Schäfer · Karlsbad</div>
     </div>
   </div>
   <div class="bio-text-col">
@@ -1800,13 +2101,11 @@
 
     <div class="gallery-grid">
       <div class="gallery-item">
-        <div class="gallery-ph" style="background:#0d0d0d;">
-          <div class="gallery-ph-stripes"></div>
-          <svg class="gallery-ph-icon" viewBox="0 0 32 32" fill="none">
-            <circle cx="16" cy="13" r="5" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
-            <path d="M5 28 Q16 20 27 28" stroke="rgba(200,169,110,0.5)" fill="none" stroke-width="1.5"/>
-          </svg>
-          <div class="gallery-ph-text" data-de="Künstlerportrait" data-en="Artist Portrait">Künstlerportrait</div>
+        <div class="gallery-ph" style="background:#0d0d0d; padding: 0;">
+          <img src="portrait.jpg" alt="Friedrich Schäfer · Karlsbad"
+               style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position: 30% 30%; z-index:0; transition: transform 0.7s ease;">
+          <div style="position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%); z-index:1;"></div>
+          <div class="gallery-ph-text" data-de="Friedrich Schäfer · Karlsbad" data-en="Friedrich Schäfer · Karlovy Vary" style="position:absolute; bottom:18px; left:18px; right:18px; z-index:2; text-align:left; font-size: 11px;">Friedrich Schäfer · Karlsbad</div>
         </div>
       </div>
       <div class="gallery-item">
@@ -1873,13 +2172,13 @@
       <div>
         <div class="contact-block-label" data-de="E-Mail" data-en="Email">E-Mail</div>
         <div class="contact-block-text">
-          <a href="mailto:kontakt@friedrichschaefer.de">kontakt@friedrichschaefer.de</a>
+          <a href="mailto:kontakt@fjs-pianist.de">kontakt@fjs-pianist.de</a>
         </div>
       </div>
       <div>
         <div class="contact-block-label" data-de="Management" data-en="Management">Management</div>
-        <div class="contact-block-text" data-de="Management-Kontakt<br>wird hier eingetragen" data-en="Management contact<br>will be entered here">
-          Management-Kontakt<br>wird hier eingetragen
+        <div class="contact-block-text">
+          <a href="mailto:management@fjs-pianist.de">management@fjs-pianist.de</a>
         </div>
       </div>
       <div>
@@ -2004,15 +2303,191 @@ function goToSlide(n) {
   dotsContainer.children[currentSlide].classList.add('active');
 }
 
-setInterval(() => {
+// Manual nav arrows
+const heroPrev = document.getElementById('hero-prev');
+const heroNext = document.getElementById('hero-next');
+if (heroPrev) heroPrev.addEventListener('click', () => {
+  resetAutoAdvance();
+  goToSlide((currentSlide - 1 + slides.length) % slides.length);
+});
+if (heroNext) heroNext.addEventListener('click', () => {
+  resetAutoAdvance();
   goToSlide((currentSlide + 1) % slides.length);
-}, 5000);
+});
+
+// Auto-advance: video slide waits for video end, others wait 6s
+let autoAdvanceTimer = null;
+function resetAutoAdvance() {
+  if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+}
+function scheduleNext() {
+  resetAutoAdvance();
+  const cur = slides[currentSlide];
+  if (cur && cur.classList.contains('hero-slide-video')) {
+    // Wait for video to end (handled by 'ended' listener below)
+    return;
+  }
+  autoAdvanceTimer = setTimeout(() => {
+    goToSlide((currentSlide + 1) % slides.length);
+  }, 6000);
+}
+
+// Wrap goToSlide to schedule next
+const _goToSlide = goToSlide;
+goToSlide = function(n) {
+  _goToSlide(n);
+  scheduleNext();
+};
+scheduleNext();
+
+// ──────────── HERO VIDEO + AUDIO ────────────
+const heroVideo = document.getElementById('hero-video');
+const audioToggle = document.getElementById('hero-audio-toggle');
+const audioLabel = document.getElementById('hero-audio-label');
+
+const SOFT_VOLUME = 0.18; // dezent im hintergrund
+let userMuted = false;    // Default: Ton an. Browser blockt evtl. den Autoplay-mit-Sound,
+                          // dann fallen wir auf muted zurück, der User kann es per Klick einschalten.
+
+if (heroVideo) {
+  heroVideo.volume = SOFT_VOLUME;
+  // Versuch 1: direkt mit Ton starten
+  heroVideo.muted = false;
+  const tryWithSound = heroVideo.play();
+  if (tryWithSound && tryWithSound.then) {
+    tryWithSound.then(() => {
+      // klappt: Toggle als "Ton an" anzeigen
+      audioToggle.classList.remove('muted');
+      audioLabel.textContent = currentLang === 'en' ? 'Sound off' : 'Ton aus';
+      audioLabel.setAttribute('data-de', 'Ton aus');
+      audioLabel.setAttribute('data-en', 'Sound off');
+    }).catch(() => {
+      // Browser hat Ton blockiert — stumm starten und User auf "Ton an" hinweisen
+      heroVideo.muted = true;
+      heroVideo.play().catch(() => {});
+      audioToggle.classList.add('muted');
+      audioLabel.textContent = currentLang === 'en' ? 'Sound on' : 'Ton an';
+      audioLabel.setAttribute('data-de', 'Ton an');
+      audioLabel.setAttribute('data-en', 'Sound on');
+      userMuted = true;
+      // Beim ersten Klick irgendwo auf der Seite Ton aktivieren (gilt als User-Gesture)
+      const enableOnGesture = () => {
+        if (heroVideo.muted && !userMuted) return;
+        if (heroVideo.muted) setAudioOn(true);
+        document.removeEventListener('click', enableOnGesture);
+        document.removeEventListener('touchstart', enableOnGesture);
+      };
+      // hier NICHT auto-enabling — nur wenn User explizit klickt; bewusst nichts tun
+    });
+  }
+
+  // When video ends naturally, advance to next slide
+  heroVideo.addEventListener('ended', () => {
+    if (slides[currentSlide] && slides[currentSlide].classList.contains('hero-slide-video')) {
+      goToSlide((currentSlide + 1) % slides.length);
+    }
+  });
+}
+
+function setAudioOn(on) {
+  if (!heroVideo) return;
+  if (on) {
+    heroVideo.muted = false;
+    heroVideo.volume = SOFT_VOLUME;
+    audioToggle.classList.remove('muted');
+    audioLabel.textContent = currentLang === 'en' ? 'Sound off' : 'Ton aus';
+    audioLabel.setAttribute('data-de', 'Ton aus');
+    audioLabel.setAttribute('data-en', 'Sound off');
+    heroVideo.play().catch(() => {});
+  } else {
+    heroVideo.muted = true;
+    audioToggle.classList.add('muted');
+    audioLabel.textContent = currentLang === 'en' ? 'Sound on' : 'Ton an';
+    audioLabel.setAttribute('data-de', 'Ton an');
+    audioLabel.setAttribute('data-en', 'Sound on');
+  }
+  userMuted = !on;
+}
+
+if (audioToggle) {
+  audioToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setAudioOn(heroVideo.muted);
+  });
+}
+
+// Track scroll: ONLY mute when user explicitly scrolls back to top of hero (so audio restarts).
+// Audio should NOT mute just because user scrolled past hero — only when:
+//   1. User clicks toggle off
+//   2. An <audio> hörprobe starts playing
+//   3. Another <video> on the page starts playing
+//   4. Video ended naturally
+let wasInHero = true;
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  if (!heroVideo) return;
+  const scrollY = window.scrollY;
+  const heroHeight = document.getElementById('hero').offsetHeight;
+  const inHero = scrollY < heroHeight - 80;
+  const scrollingUp = scrollY < lastScrollY;
+
+  // Returned to very top of hero → restart playback from beginning
+  if (!wasInHero && inHero && scrollY < 40 && scrollingUp) {
+    try { heroVideo.currentTime = 0; } catch(e){}
+    heroVideo.play().catch(() => {});
+  }
+
+  wasInHero = inHero;
+  lastScrollY = scrollY;
+}, { passive: true });
+
+// Pause hero video sound when ANY other media on the page starts playing
+document.addEventListener('play', (e) => {
+  const t = e.target;
+  if (!t || t === heroVideo) return;
+  if (t.tagName === 'AUDIO' || t.tagName === 'VIDEO') {
+    if (heroVideo && !heroVideo.muted) setAudioOn(false);
+  }
+}, true);
 
 // ──────────── NAV SCROLL ────────────
 const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 });
+
+// ──────────── MOBILE MENU ────────────
+const mobileBtn = document.getElementById('mobile-menu-btn');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const mobileBackdrop = document.getElementById('mobile-backdrop');
+function setMobileMenu(open) {
+  if (!mobileBtn) return;
+  mobileBtn.classList.toggle('open', open);
+  mobileDrawer.classList.toggle('open', open);
+  mobileBackdrop.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+if (mobileBtn) {
+  mobileBtn.addEventListener('click', () => {
+    setMobileMenu(!mobileDrawer.classList.contains('open'));
+  });
+  mobileBackdrop.addEventListener('click', () => setMobileMenu(false));
+  mobileDrawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => setMobileMenu(false));
+  });
+  // Lang buttons in drawer mirror main toggles
+  const mDe = document.getElementById('m-btn-de');
+  const mEn = document.getElementById('m-btn-en');
+  if (mDe) mDe.addEventListener('click', () => {
+    document.getElementById('btn-de').click();
+    mDe.classList.add('active'); mEn.classList.remove('active');
+  });
+  if (mEn) mEn.addEventListener('click', () => {
+    document.getElementById('btn-en').click();
+    mEn.classList.add('active'); mDe.classList.remove('active');
+  });
+}
 
 // ──────────── CONCERT DATA ────────────
 const concertsDE = [
